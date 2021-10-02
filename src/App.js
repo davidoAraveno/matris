@@ -1,39 +1,53 @@
 import React, {useState} from 'react';
 import './App.css';
+import CodeGenerator from './components/CodeGenerator';
 
 
 
 function App() {
-  const [codigoAleatorio, funcionCodigoAleatorio] = useState("")
-  const letras = 'A B C D E F G H I J K L M N O P Q R S T U V';
-  const numeros = '0 1 2 3 4 5 6 7 8 9';
-
-
-  const codeGenerator = (e) => {
-    e.preventDefault();
-
-    const caracteresFinales = letras.split(' ');
-    caracteresFinales.sort(function() {return Math.random() - 0.5})
-    console.log(caracteresFinales)
+  const [nombre, funcionNombre] = useState('');
+  const [fono, funcionFono] = useState('');
+  const [email, funcionEmail] = useState('');
+  const [codigoAleatorio, funcionCodigoAleatorio] = useState("");
   
-    const numerosFinales = numeros.split(' ');
-    numerosFinales.sort(function() {return Math.random() - 0.5});
-    console.log(numerosFinales[0]);
 
-    funcionCodigoAleatorio(caracteresFinales[0]+numerosFinales[0]+caracteresFinales[0]+numerosFinales[0])
+  const datosInvitado = (e) => {
+
+    if(e.target.id === 'nombre') {
+      funcionNombre(e.target.value);
+    } else if(e.target.id === 'fono'){
+      funcionFono(e.target.value);
+    } else if(e.target.id === 'email'){
+      funcionEmail(e.target.value);
+    } else if(e.target.id === 'codigoAleatorio'){
+      funcionCodigoAleatorio(e.target.value);
+    }
+
   }
 
-
-
-
+  
   return (
-    <div className="App">
+    <div>
       <form>
-        <input type="text" value={codigoAleatorio} />
-        <input type="submit" value="generar codigo" onClick={codeGenerator} />
+        <div>
+          <input type="text" id="nombre" value={nombre} onChange={datosInvitado} />
+        </div>
+        <div>
+          <input type="text" id="fono" value={fono} onChange={datosInvitado} />
+        </div>
+        <div>
+          <input type="text" id="email" value={email} onChange={datosInvitado} />
+        </div>
+        <div>
+          <CodeGenerator funcionCodigoAleatorio={funcionCodigoAleatorio} codigoAleatorio={codigoAleatorio} />
+        </div>
+        <div>
+        <input type="submit" value="crear invitado" />
+        </div>
       </form>
     </div>
-  );
+  )
+
 }
 
 export default App;
